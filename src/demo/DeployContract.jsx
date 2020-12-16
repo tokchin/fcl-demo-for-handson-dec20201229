@@ -1,10 +1,10 @@
-import React, {useState} from "react"
-import * as fcl from "@onflow/fcl"
-import * as t from "@onflow/types"
+import React, { useState } from "react";
+import * as fcl from "@onflow/fcl";
+import * as t from "@onflow/types";
 
-import Card from '../components/Card'
-import Header from '../components/Header'
-import Code from '../components/Code'
+import Card from "../components/Card";
+import Header from "../components/Header";
+import Code from "../components/Code";
 
 const deployTransaction = `\
 transaction(code: String) {
@@ -12,7 +12,7 @@ transaction(code: String) {
     acct.contracts.add(name: "HelloWorld", code: code.decodeHex())
   }
 }
-`
+`;
 
 const simpleContract = `\
 pub contract HelloWorld {
@@ -28,23 +28,21 @@ pub contract HelloWorld {
     return self.greeting
   }
 }
-`
+`;
 
 const DeployContract = () => {
-  const [status, setStatus] = useState("Not started")
-  const [transaction, setTransaction] = useState(null)
+  const [status, setStatus] = useState("Not started");
+  const [transaction, setTransaction] = useState(null);
 
   const runTransaction = async (event) => {
-    event.preventDefault()
-    
-    setStatus("Resolving...")
+    event.preventDefault();
 
-    const blockResponse = await fcl.send([
-      fcl.getLatestBlock(),
-    ])
+    setStatus("Resolving...");
 
-    const block = await fcl.decode(blockResponse)
-    
+    const blockResponse = await fcl.send([fcl.getLatestBlock()]);
+
+    const block = await fcl.decode(blockResponse);
+
     try {
       const { transactionId } = await fcl.send([
         fcl.transaction(deployTransaction),
@@ -52,33 +50,29 @@ const DeployContract = () => {
           fcl.arg(
             Buffer.from(simpleContract, "utf8").toString("hex"),
             t.String
-          )
+          ),
         ]),
         fcl.proposer(fcl.currentUser().authorization),
-        fcl.authorizations([
-          fcl.currentUser().authorization
-        ]),
+        fcl.authorizations([fcl.currentUser().authorization]),
         fcl.payer(fcl.currentUser().authorization),
         fcl.ref(block.id),
-      ])
+      ]);
 
-      setStatus("Transaction sent, waiting for confirmation")
+      setStatus("Transaction sent, waiting for confirmation");
 
-      const unsub = fcl
-        .tx({ transactionId })
-        .subscribe(transaction => {
-          setTransaction(transaction)
-          
-          if (fcl.tx.isSealed(transaction)) {
-            setStatus("Transaction is Sealed")
-            unsub()
-          }
-        })
+      const unsub = fcl.tx({ transactionId }).subscribe((aTransaction) => {
+        setTransaction(aTransaction);
+
+        if (fcl.tx.isSealed(aTransaction)) {
+          setStatus("Transaction is Sealed");
+          unsub();
+        }
+      });
     } catch (error) {
       console.error(error);
-      setStatus("Transaction failed")
+      setStatus("Transaction failed");
     }
-  }
+  };
 
   return (
     <Card>
@@ -86,7 +80,7 @@ const DeployContract = () => {
 
       <Code>{simpleContract}</Code>
 
-      <button onClick={runTransaction}>
+      <button type="button" onClick={runTransaction}>
         Deploy Contract
       </button>
 
@@ -94,7 +88,7 @@ const DeployContract = () => {
 
       {transaction && <Code>{JSON.stringify(transaction, null, 2)}</Code>}
     </Card>
-  )
-}
+  );
+};
 
-export default DeployContract
+export default DeployContract;

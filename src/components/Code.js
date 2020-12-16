@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components";
 
 const Code = styled.pre`
   background: #f0f0f0;
@@ -6,6 +6,6 @@ const Code = styled.pre`
   max-height: 150px;
   overflow-y: auto;
   padding: 5px;
-`
+`;
 
 export default Code;

@@ -1,10 +1,10 @@
-import React, {useState} from "react"
-import * as fcl from "@onflow/fcl"
+import React, { useState } from "react";
+import * as fcl from "@onflow/fcl";
 
-import Card from '../components/Card'
-import Header from '../components/Header'
-import Code from '../components/Code'
-import Point from '../model/Point'
+import Card from "../components/Card";
+import Header from "../components/Header";
+import Code from "../components/Code";
+import Point from "../model/Point";
 
 const scriptTwo = `\
 pub struct SomeStruct {
@@ -22,21 +22,18 @@ pub fun main(): [SomeStruct] {
 }
 `;
 
-fcl.config()
-  .put("decoder.SomeStruct", data => new Point(data))
+fcl.config().put("decoder.SomeStruct", (data) => new Point(data));
 
 export default function ScriptTwo() {
-  const [data, setData] = useState(null)
+  const [data, setData] = useState(null);
 
   const runScript = async (event) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    const response = await fcl.send([
-      fcl.script(scriptTwo),
-    ])
-    
-    setData(await fcl.decode(response))
-  }
+    const response = await fcl.send([fcl.script(scriptTwo)]);
+
+    setData(await fcl.decode(response));
+  };
 
   return (
     <Card>
@@ -44,12 +41,14 @@ export default function ScriptTwo() {
 
       <Code>{scriptTwo}</Code>
 
-      <button onClick={runScript}>Run Script</button>
-      
+      <button type="button" onClick={runScript}>
+        Run Script
+      </button>
+
       {data && (
         <Code>
           {data.map((item, index) => (
-            <div key={index}>
+            <div key={item}>
               {item.constructor.name} {index}
               <br />
               {JSON.stringify(item, null, 2)}
@@ -60,5 +59,5 @@ export default function ScriptTwo() {
         </Code>
       )}
     </Card>
-  )
+  );
 }
