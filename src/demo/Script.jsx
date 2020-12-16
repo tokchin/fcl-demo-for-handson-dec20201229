@@ -13,11 +13,15 @@ pub fun main(): Int {
 
 export default function ScriptOne() {
   const [data, setData] = useState(null);
-
+  const [script, setScript] = useState(scriptOne);
+  const updateScript = (event) => {
+    event.preventDefault();
+    setScript(event.target.value);
+  };
   const runScript = async (event) => {
     event.preventDefault();
 
-    const response = await fcl.send([fcl.script(scriptOne)]);
+    const response = await fcl.send([fcl.script(script)]);
 
     setData(await fcl.decode(response));
   };
@@ -26,8 +30,9 @@ export default function ScriptOne() {
     <Card>
       <Header>run script</Header>
 
-      <Code>{scriptOne}</Code>
-
+      <Code>
+        <textarea rows="5" cols="50" value={script} onChange={updateScript} />
+      </Code>
       <button type="button" onClick={runScript}>
         Run Script
       </button>
