@@ -16,7 +16,11 @@ transaction {
 const SendTransaction = () => {
   const [status, setStatus] = useState("Not started");
   const [transaction, setTransaction] = useState(null);
-
+  const [transactionCode, setTransactionCode] = useState(simpleTransaction);
+  const updateTransactionCode = (event) => {
+    event.preventDefault();
+    setTransactionCode(event.target.value);
+  };
   const sendTransaction = async (event) => {
     event.preventDefault();
 
@@ -28,7 +32,7 @@ const SendTransaction = () => {
 
     try {
       const { transactionId } = await fcl.send([
-        fcl.transaction(simpleTransaction),
+        fcl.transaction(transactionCode),
         fcl.proposer(fcl.currentUser().authorization),
         fcl.payer(fcl.currentUser().authorization),
         fcl.ref(block.id),
@@ -54,7 +58,14 @@ const SendTransaction = () => {
     <Card>
       <Header>send transaction</Header>
 
-      <Code>{simpleTransaction}</Code>
+      <Code>
+        <textarea
+          rows="5"
+          cols="50"
+          value={transactionCode}
+          onChange={updateTransactionCode}
+        />
+      </Code>
 
       <button type="button" onClick={sendTransaction}>
         Send

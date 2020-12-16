@@ -33,7 +33,11 @@ pub contract HelloWorld {
 const DeployContract = () => {
   const [status, setStatus] = useState("Not started");
   const [transaction, setTransaction] = useState(null);
-
+  const [contract, setContract] = useState(simpleContract);
+  const updateContract = (event) => {
+    event.preventDefault();
+    setContract(event.target.value);
+  };
   const runTransaction = async (event) => {
     event.preventDefault();
 
@@ -47,10 +51,7 @@ const DeployContract = () => {
       const { transactionId } = await fcl.send([
         fcl.transaction(deployTransaction),
         fcl.args([
-          fcl.arg(
-            Buffer.from(simpleContract, "utf8").toString("hex"),
-            t.String
-          ),
+          fcl.arg(Buffer.from(contract, "utf8").toString("hex"), t.String),
         ]),
         fcl.proposer(fcl.currentUser().authorization),
         fcl.authorizations([fcl.currentUser().authorization]),
@@ -78,7 +79,14 @@ const DeployContract = () => {
     <Card>
       <Header>deploy contract</Header>
 
-      <Code>{simpleContract}</Code>
+      <Code>
+        <textarea
+          cols="30"
+          rows="10"
+          onChange={updateContract}
+          value={contract}
+        />
+      </Code>
 
       <button type="button" onClick={runTransaction}>
         Deploy Contract
