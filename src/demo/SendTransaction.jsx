@@ -7,9 +7,11 @@ import Code from "../components/Code";
 import Textarea from "../components/Textarea";
 
 const simpleTransaction = `\
+import HelloWorld from 0x80617c721f7c4cfa
+
 transaction {
   execute {
-    log("A transaction happened")
+    HelloWorld.hello(message: "Hello from visitor")
   }
 }
 `;

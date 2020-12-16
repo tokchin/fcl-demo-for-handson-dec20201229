@@ -10,7 +10,6 @@ import Authenticate from "./demo/Authenticate";
 import UserInfo from "./demo/UserInfo";
 import SendTransaction from "./demo/SendTransaction";
 import DeployContract from "./demo/DeployContract";
-import InteractWithContract from "./demo/InteractWithContract";
 
 const Wrapper = styled.div`
   font-size: 13px;
@@ -28,7 +27,6 @@ function App() {
         <Script />
         <SendTransaction />
         <DeployContract />
-        <InteractWithContract />
       </Section>
     </Wrapper>
   );
