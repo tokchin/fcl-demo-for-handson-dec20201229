@@ -10,4 +10,3 @@ All the demo cases are located in `./src/demo`. Each component is responsible fo
 - **UserInfo**: Subscribes to `fcl.currentUser()` and shows the connected user account information
 - **SendTransaction**: Sends a simple transaction to Flow. This requires the signatures from the connected user
 - **DeployContract**: Deploys a contract to the current user's code storage
-- **InteractWithContract**: Sends a simple transaction that executes a contract method. This requires the signatures from the connected user
