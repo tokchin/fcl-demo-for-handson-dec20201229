@@ -4,6 +4,7 @@ import * as fcl from "@onflow/fcl";
 import Card from "../components/Card";
 import Header from "../components/Header";
 import Code from "../components/Code";
+import Textarea from "../components/Textarea";
 
 const scriptOne = `\
 pub fun main(): Int {
@@ -30,9 +31,7 @@ export default function ScriptOne() {
     <Card>
       <Header>run script</Header>
 
-      <Code>
-        <textarea rows="5" cols="50" value={script} onChange={updateScript} />
-      </Code>
+      <Textarea rows="5" cols="50" value={script} onChange={updateScript} />
       <button type="button" onClick={runScript}>
         Run Script
       </button>

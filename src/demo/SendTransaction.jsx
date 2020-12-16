@@ -4,6 +4,7 @@ import * as fcl from "@onflow/fcl";
 import Card from "../components/Card";
 import Header from "../components/Header";
 import Code from "../components/Code";
+import Textarea from "../components/Textarea";
 
 const simpleTransaction = `\
 transaction {
@@ -57,22 +58,16 @@ const SendTransaction = () => {
   return (
     <Card>
       <Header>send transaction</Header>
-
-      <Code>
-        <textarea
-          rows="5"
-          cols="50"
-          value={transactionCode}
-          onChange={updateTransactionCode}
-        />
-      </Code>
-
+      <Textarea
+        rows="5"
+        cols="50"
+        value={transactionCode}
+        onChange={updateTransactionCode}
+      />
       <button type="button" onClick={sendTransaction}>
         Send
       </button>
-
       <Code>Status: {status}</Code>
-
       {transaction && <Code>{JSON.stringify(transaction, null, 2)}</Code>}
     </Card>
   );

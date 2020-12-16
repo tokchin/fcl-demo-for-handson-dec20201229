@@ -5,6 +5,7 @@ import * as t from "@onflow/types";
 import Card from "../components/Card";
 import Header from "../components/Header";
 import Code from "../components/Code";
+import Textarea from "../components/Textarea";
 
 const deployTransaction = `\
 transaction(code: String) {
@@ -79,14 +80,12 @@ const DeployContract = () => {
     <Card>
       <Header>deploy contract</Header>
 
-      <Code>
-        <textarea
-          cols="30"
-          rows="10"
-          onChange={updateContract}
-          value={contract}
-        />
-      </Code>
+      <Textarea
+        cols="30"
+        rows="10"
+        onChange={updateContract}
+        value={contract}
+      />
 
       <button type="button" onClick={runTransaction}>
         Deploy Contract
