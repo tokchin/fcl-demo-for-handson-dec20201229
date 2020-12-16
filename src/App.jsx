@@ -5,7 +5,7 @@ import Section from "./components/Section";
 import Header from "./components/Header";
 
 import GetAccount from "./demo/GetAccount";
-import ScriptOne from "./demo/ScriptOne";
+import Script from "./demo/Script";
 import Authenticate from "./demo/Authenticate";
 import UserInfo from "./demo/UserInfo";
 import SendTransaction from "./demo/SendTransaction";
@@ -25,7 +25,7 @@ function App() {
         <Authenticate />
         <UserInfo />
         <GetAccount />
-        <ScriptOne />
+        <Script />
         <SendTransaction />
         <DeployContract />
         <InteractWithContract />
