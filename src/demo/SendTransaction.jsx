@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import * as fcl from "@onflow/fcl";
+import React, { useState } from 'react';
+import * as fcl from '@onflow/fcl';
 
-import Card from "../components/Card";
-import Header from "../components/Header";
-import Code from "../components/Code";
-import Textarea from "../components/Textarea";
+import Card from '../components/Card';
+import Header from '../components/Header';
+import Code from '../components/Code';
+import Textarea from '../components/Textarea';
 
 const simpleTransaction = `\
 import HelloWorld from 0x80617c721f7c4cfa
@@ -17,7 +17,7 @@ transaction {
 `;
 
 const SendTransaction = () => {
-  const [status, setStatus] = useState("Not started");
+  const [status, setStatus] = useState('Not started');
   const [transaction, setTransaction] = useState(null);
   const [transactionCode, setTransactionCode] = useState(simpleTransaction);
   const updateTransactionCode = (event) => {
@@ -27,7 +27,7 @@ const SendTransaction = () => {
   const sendTransaction = async (event) => {
     event.preventDefault();
 
-    setStatus("Resolving...");
+    setStatus('Resolving...');
 
     const blockResponse = await fcl.send([fcl.getLatestBlock()]);
 
@@ -41,19 +41,19 @@ const SendTransaction = () => {
         fcl.ref(block.id),
       ]);
 
-      setStatus("Transaction sent, waiting for confirmation");
+      setStatus('Transaction sent, waiting for confirmation');
 
       const unsub = fcl.tx({ transactionId }).subscribe((aTransaction) => {
         setTransaction(aTransaction);
 
         if (fcl.tx.isSealed(aTransaction)) {
-          setStatus("Transaction is Sealed");
+          setStatus('Transaction is Sealed');
           unsub();
         }
       });
     } catch (error) {
       console.error(error);
-      setStatus("Transaction failed");
+      setStatus('Transaction failed');
     }
   };
 

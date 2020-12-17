@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@onflow/dev-wallet": "^0.0.10",
-    "eslint": "^6.6.0",
+    "eslint":"^6.6.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^7.0.0",
     "eslint-plugin-import": "^2.22.1",
