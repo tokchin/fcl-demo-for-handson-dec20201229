@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
-import * as fcl from "@onflow/fcl";
+import React, { useState, useEffect } from 'react';
+import * as fcl from '@onflow/fcl';
 
-import Card from "../components/Card";
+import Card from '../components/Card';
 
 const SignInOutButton = ({ user: { loggedIn } }) => {
   const signInOrOut = async (event) => {
@@ -16,7 +16,7 @@ const SignInOutButton = ({ user: { loggedIn } }) => {
 
   return (
     <button type="button" onClick={signInOrOut}>
-      {loggedIn ? "Sign Out" : "Sign In/Up"}
+      {loggedIn ? 'Sign Out' : 'Sign In/Up'}
     </button>
   );
 };

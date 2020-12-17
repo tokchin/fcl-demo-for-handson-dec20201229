@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import * as fcl from "@onflow/fcl";
+import React, { useState } from 'react';
+import * as fcl from '@onflow/fcl';
 
-import Card from "../components/Card";
-import Header from "../components/Header";
-import Code from "../components/Code";
-import Textarea from "../components/Textarea";
+import Card from '../components/Card';
+import Header from '../components/Header';
+import Code from '../components/Code';
+import CodeEditor from '../components/CodeEditor';
 
 const scriptOne = `\
 pub fun main(): Int {
@@ -15,9 +15,8 @@ pub fun main(): Int {
 export default function ScriptOne() {
   const [data, setData] = useState(null);
   const [script, setScript] = useState(scriptOne);
-  const updateScript = (event) => {
-    event.preventDefault();
-    setScript(event.target.value);
+  const updateScript = (value) => {
+    setScript(value);
   };
   const runScript = async (event) => {
     event.preventDefault();
@@ -31,7 +30,7 @@ export default function ScriptOne() {
     <Card>
       <Header>run script</Header>
 
-      <Textarea rows="5" cols="50" value={script} onChange={updateScript} />
+      <CodeEditor value={script} onChange={updateScript} />
       <button type="button" onClick={runScript}>
         Run Script
       </button>

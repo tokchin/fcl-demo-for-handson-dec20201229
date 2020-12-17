@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import * as fcl from "@onflow/fcl";
-import * as t from "@onflow/types";
+import React, { useState } from 'react';
+import * as fcl from '@onflow/fcl';
+import * as t from '@onflow/types';
 
-import Card from "../components/Card";
-import Header from "../components/Header";
-import Code from "../components/Code";
-import Textarea from "../components/Textarea";
+import Card from '../components/Card';
+import Header from '../components/Header';
+import Code from '../components/Code';
+import CodeEditor from '../components/CodeEditor';
 
 const deployTransaction = `\
 transaction(code: String) {
@@ -32,17 +32,16 @@ pub contract HelloWorld {
 `;
 
 const DeployContract = () => {
-  const [status, setStatus] = useState("Not started");
+  const [status, setStatus] = useState('Not started');
   const [transaction, setTransaction] = useState(null);
   const [contract, setContract] = useState(simpleContract);
-  const updateContract = (event) => {
-    event.preventDefault();
-    setContract(event.target.value);
+  const updateContract = (value) => {
+    setContract(value);
   };
   const runTransaction = async (event) => {
     event.preventDefault();
 
-    setStatus("Resolving...");
+    setStatus('Resolving...');
 
     const blockResponse = await fcl.send([fcl.getLatestBlock()]);
 
@@ -52,7 +51,7 @@ const DeployContract = () => {
       const { transactionId } = await fcl.send([
         fcl.transaction(deployTransaction),
         fcl.args([
-          fcl.arg(Buffer.from(contract, "utf8").toString("hex"), t.String),
+          fcl.arg(Buffer.from(contract, 'utf8').toString('hex'), t.String),
         ]),
         fcl.proposer(fcl.currentUser().authorization),
         fcl.authorizations([fcl.currentUser().authorization]),
@@ -60,19 +59,19 @@ const DeployContract = () => {
         fcl.ref(block.id),
       ]);
 
-      setStatus("Transaction sent, waiting for confirmation");
+      setStatus('Transaction sent, waiting for confirmation');
 
       const unsub = fcl.tx({ transactionId }).subscribe((aTransaction) => {
         setTransaction(aTransaction);
 
         if (fcl.tx.isSealed(aTransaction)) {
-          setStatus("Transaction is Sealed");
+          setStatus('Transaction is Sealed');
           unsub();
         }
       });
     } catch (error) {
       console.error(error);
-      setStatus("Transaction failed");
+      setStatus('Transaction failed');
     }
   };
 
@@ -80,12 +79,7 @@ const DeployContract = () => {
     <Card>
       <Header>deploy contract</Header>
 
-      <Textarea
-        cols="30"
-        rows="10"
-        onChange={updateContract}
-        value={contract}
-      />
+      <CodeEditor value={contract} onChange={updateContract} />
 
       <button type="button" onClick={runTransaction}>
         Deploy Contract
