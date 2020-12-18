@@ -4,6 +4,7 @@ import * as fcl from '@onflow/fcl';
 import Card from '../components/Card';
 import Header from '../components/Header';
 import Code from '../components/Code';
+import InnerSection from '../components/innerSection';
 import CodeEditor from '../components/CodeEditor';
 import 'ace-builds/src-noconflict/mode-java';
 import 'ace-builds/src-noconflict/theme-github';
@@ -78,18 +79,29 @@ const SendTransaction = () => {
   return (
     <Card>
       <Header>send transaction</Header>
-      <input
-        type="checkbox"
-        value={authorize}
-        onChange={() => {
-          setAuthorize(!authorize);
-        }}
-      />
-      <input value={gas} onChange={updateGas} />
-      <CodeEditor value={transactionCode} onChange={updateTransactionCode} />
-      <button type="button" onClick={sendTransaction}>
-        Send
-      </button>
+      <InnerSection>
+        Signature required?:
+        <input
+          type="checkbox"
+          value={authorize}
+          onChange={() => {
+            setAuthorize(!authorize);
+          }}
+        />
+      </InnerSection>
+      <InnerSection>
+        Gas Fee:
+        <input value={gas} onChange={updateGas} />
+      </InnerSection>
+      <InnerSection>
+        <CodeEditor value={transactionCode} onChange={updateTransactionCode} />
+      </InnerSection>
+      <InnerSection>
+        <button type="button" onClick={sendTransaction}>
+          Send
+        </button>
+      </InnerSection>
+
       <Code>Status: {status}</Code>
       {transaction && <Code>{JSON.stringify(transaction, null, 2)}</Code>}
     </Card>
