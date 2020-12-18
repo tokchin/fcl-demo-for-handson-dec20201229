@@ -38,6 +38,7 @@ const SendTransaction = () => {
       const { transactionId } = await fcl.send([
         fcl.transaction(transactionCode),
         fcl.proposer(fcl.currentUser().authorization),
+        fcl.authorizations([fcl.currentUser().authorization]),
         fcl.payer(fcl.currentUser().authorization),
         fcl.ref(block.id),
       ]);
