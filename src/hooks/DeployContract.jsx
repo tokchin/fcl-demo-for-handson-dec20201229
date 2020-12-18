@@ -6,6 +6,7 @@ import Card from '../components/Card';
 import Header from '../components/Header';
 import Code from '../components/Code';
 import CodeEditor from '../components/CodeEditor';
+import InnerSection from '../components/innerSection';
 
 const deployTransaction = `\
 transaction(code: String) {
@@ -78,16 +79,20 @@ const DeployContract = () => {
   return (
     <Card>
       <Header>deploy contract</Header>
+      <InnerSection>
+        <CodeEditor value={contract} onChange={updateContract} />
+      </InnerSection>
 
-      <CodeEditor value={contract} onChange={updateContract} />
+      <InnerSection>
+        <button type="button" onClick={runTransaction}>
+          Deploy Contract
+        </button>
+      </InnerSection>
+      <InnerSection>
+        <Code>Status: {status}</Code>
 
-      <button type="button" onClick={runTransaction}>
-        Deploy Contract
-      </button>
-
-      <Code>Status: {status}</Code>
-
-      {transaction && <Code>{JSON.stringify(transaction, null, 2)}</Code>}
+        {transaction && <Code>{JSON.stringify(transaction, null, 2)}</Code>}
+      </InnerSection>
     </Card>
   );
 };

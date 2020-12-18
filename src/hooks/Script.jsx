@@ -5,6 +5,7 @@ import Card from '../components/Card';
 import Header from '../components/Header';
 import Code from '../components/Code';
 import CodeEditor from '../components/CodeEditor';
+import InnerSection from '../components/innerSection';
 
 const scriptOne = `\
 pub fun main(): Int {
@@ -29,13 +30,17 @@ export default function ScriptOne() {
   return (
     <Card>
       <Header>run script</Header>
-
-      <CodeEditor value={script} onChange={updateScript} />
-      <button type="button" onClick={runScript}>
-        Run Script
-      </button>
-
-      {data && <Code>{JSON.stringify(data, null, 2)}</Code>}
+      <InnerSection>
+        <CodeEditor value={script} onChange={updateScript} />
+      </InnerSection>
+      <InnerSection>
+        <button type="button" onClick={runScript}>
+          Run Script
+        </button>
+      </InnerSection>
+      <InnerSection>
+        {data && <Code>{JSON.stringify(data, null, 2)}</Code>}
+      </InnerSection>
     </Card>
   );
 }
