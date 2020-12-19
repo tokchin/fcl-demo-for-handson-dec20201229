@@ -12,7 +12,6 @@ const CodeEditor = ({ value, onChange }) => {
         value={value}
         onChange={onChange}
         name="UNIQUE_ID_OF_DIV"
-        editorProps={{ $blockScrolling: true }}
       />
     </div>
   );

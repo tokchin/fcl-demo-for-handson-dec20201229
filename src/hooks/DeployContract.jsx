@@ -69,6 +69,7 @@ const DeployContract = () => {
         fcl.args([
           fcl.arg(Buffer.from(contract, 'utf8').toString('hex'), t.String),
         ]),
+        fcl.limit(100),
         fcl.proposer(fcl.currentUser().authorization),
         fcl.authorizations([fcl.currentUser().authorization]),
         fcl.payer(fcl.currentUser().authorization),
