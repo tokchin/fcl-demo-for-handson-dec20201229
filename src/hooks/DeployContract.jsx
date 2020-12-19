@@ -34,7 +34,7 @@ pub contract HelloWorld {
 
 const DeployContract = () => {
   const [status, setStatus] = useState('Not started');
-  const [transactionResult, setTransactionResult] = useState(deployTransaction);
+  const [transactionResult, setTransactionResult] = useState('');
   const [contractName, setContractName] = useState('HelloWorld');
   const [transaction, setTransaction] = useState(deployTransaction);
   const updateContractName = (event) => {
