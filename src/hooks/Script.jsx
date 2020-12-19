@@ -21,10 +21,14 @@ export default function ScriptOne() {
   };
   const runScript = async (event) => {
     event.preventDefault();
-
-    const response = await fcl.send([fcl.script(script)]);
-
-    setData(await fcl.decode(response));
+    await fcl
+      .send([fcl.script(script)])
+      .then(async (response) => {
+        setData(await fcl.decode(response));
+      })
+      .catch((error) => {
+        setData(String(error));
+      });
   };
 
   return (
