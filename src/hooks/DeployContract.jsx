@@ -34,11 +34,26 @@ pub contract HelloWorld {
 
 const DeployContract = () => {
   const [status, setStatus] = useState('Not started');
-  const [transaction, setTransaction] = useState(null);
+  const [transactionResult, setTransactionResult] = useState(deployTransaction);
+  const [contractName, setContractName] = useState('HelloWorld');
+  const [transaction, setTransaction] = useState(deployTransaction);
+  const updateContractName = (event) => {
+    setContractName(event.target.value);
+    const string = `\
+    transaction(code: String) {
+      prepare(acct: AuthAccount) {
+        acct.contracts.add(name: "${event.target.value}", code: code.decodeHex())
+      }
+    }
+    `;
+    setTransaction(string);
+  };
+
   const [contract, setContract] = useState(simpleContract);
   const updateContract = (value) => {
     setContract(value);
   };
+
   const runTransaction = async (event) => {
     event.preventDefault();
 
@@ -50,7 +65,7 @@ const DeployContract = () => {
 
     try {
       const { transactionId } = await fcl.send([
-        fcl.transaction(deployTransaction),
+        fcl.transaction(transaction),
         fcl.args([
           fcl.arg(Buffer.from(contract, 'utf8').toString('hex'), t.String),
         ]),
@@ -63,7 +78,7 @@ const DeployContract = () => {
       setStatus('Transaction sent, waiting for confirmation');
 
       const unsub = fcl.tx({ transactionId }).subscribe((aTransaction) => {
-        setTransaction(aTransaction);
+        setTransactionResult(aTransaction);
 
         if (fcl.tx.isSealed(aTransaction)) {
           setStatus('Transaction is Sealed');
@@ -78,8 +93,15 @@ const DeployContract = () => {
 
   return (
     <Card>
-      <Header>deploy contract</Header>
+      <Header>Deploy contract</Header>
       <InnerSection>
+        <p>Transaction</p>
+        Contract Name:
+        <input value={contractName} onChange={updateContractName} />
+        <Code>{transaction}</Code>
+      </InnerSection>
+      <InnerSection>
+        <p>Contract</p>
         <CodeEditor value={contract} onChange={updateContract} />
       </InnerSection>
 
@@ -91,7 +113,9 @@ const DeployContract = () => {
       <InnerSection>
         <Code>Status: {status}</Code>
 
-        {transaction && <Code>{JSON.stringify(transaction, null, 2)}</Code>}
+        {transactionResult && (
+          <Code>{JSON.stringify(transactionResult, null, 2)}</Code>
+        )}
       </InnerSection>
     </Card>
   );

@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Code = styled.pre`
   background: #f0f0f0;
